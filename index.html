@@ -180,12 +180,27 @@ document.addEventListener('DOMContentLoaded', async function() {
 <script>
 (function(){
   function byText(t){return Array.prototype.find.call(document.querySelectorAll('button'), function(b){return b.textContent.trim()===t;});}
-  var tries=0;
-  var iv=setInterval(function(){
+  var applied = false, tries = 0;
+  var iv = setInterval(function(){
     tries++;
     var btn = byText('پنل ادمین');
-    if (btn) { btn.style.display='none'; clearInterval(iv); }
-    else if (tries>150) { clearInterval(iv); }
+    if (btn && !applied) {
+      applied = true;
+      var css = '@media (max-width: 480px) {'
+        + 'header [data-dc-tpl="9"] { flex-wrap: wrap; row-gap: 8px; padding: 10px 14px !important; }'
+        + 'header [data-dc-tpl="18"] { display: none !important; }'
+        + 'header [data-dc-tpl="13"] { font-size: 18px !important; }'
+        + 'header [data-dc-tpl="10"] { flex: 1 1 auto; min-width: 0; }'
+        + 'header [data-dc-tpl="15"] { flex: 0 0 auto; }'
+        + '}';
+      var s = document.createElement('style');
+      s.textContent = css;
+      document.head.appendChild(s);
+      btn.style.display = 'none';
+      clearInterval(iv);
+    } else if (tries > 150) {
+      clearInterval(iv);
+    }
   }, 100);
 })();
 </script>
