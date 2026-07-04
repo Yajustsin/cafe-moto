@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   var iv=setInterval(function(){
     tries++;
     var btn = byText('پنل ادمین');
-    if (btn) { btn.style.display='none'; clearInterval(iv); }
+    if (btn) { btn.click(); clearInterval(iv); }
     else if (tries>150) { clearInterval(iv); }
   }, 100);
 })();
